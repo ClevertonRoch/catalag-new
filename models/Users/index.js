@@ -1,14 +1,27 @@
-const db = require('./../../database/connection')
-// const httpStatus = require('http-status')
+// MODEL USERS
+const connection = require('./../../database/connection')
 const bcrypt = require('bcrypt')
 
 class User {
+
+
+  async findAll(){
+
+    try {
+      const users = await connection.select('*').from('users')
+      return users
+    } catch (error) {
+      return false
+    }
+
+  }
+
   async create(data) {
     data
     try {
       var hash = await bcrypt.hash(data.password,10)
       data.password = hash
-      await db.insert(data).into('users')
+      await connection.insert(data).into('users')
       return true
     } catch (error) {
       console.log(error)
@@ -18,7 +31,7 @@ class User {
 
   async findEmail(email) {
     try {
-      var result = await db.select('*').from('users').where({email: email})
+      var result = await connection.select('*').from('users').where({email: email})
       if (result.length > 0) {
         return true
       }else{
@@ -26,6 +39,14 @@ class User {
       }
     } catch (error) {
       return error
+    }
+  }
+  async findById(id) {
+    try {
+      var result = await connection.select('*').from('users').where({id: id})
+      return result[0]
+    } catch (error) {
+      return false
     }
   }
 }

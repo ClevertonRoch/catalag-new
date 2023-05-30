@@ -12,8 +12,12 @@ const updateUserSchema = yup.object().shape({
   email: yup.string().email(),
   password: yup.string().min(6),
 })
+const idUserSchema = yup.object().shape({
+  id: yup.number().required().integer()
+})
 
 module.exports = {
   createUserSchema,
   updateUserSchema,
+  idUserSchema
 }

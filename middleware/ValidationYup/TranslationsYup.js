@@ -3,7 +3,7 @@ const { setLocale } = require('yup')
 setLocale({
   mixed: {
     required: 'Este campo é obrigatório',
-    notType: 'Formato digitado é invalido',
+    notType: 'Tipo do parametro é invalido',
     defined: 'Este campo precisa ter um valor definido',
     oneOf: 'Deve ser um dos seguintes valores: ${values}',
     notOneOf: 'Não pode ser um dos seguintes valores: ${values}',

@@ -1,10 +1,31 @@
 // controllers/users/index.js
 const userModel = require('./../../models/Users')
-
 const httpStatus = require('http-status')
 
-const getUsers = async (req, res) => {
-  res.send('Lista de usuários')
+
+
+const findAll = async (req, res) => {
+  try {
+    let users = await userModel.findAll()
+    res.status(httpStatus.OK).json({users: users})
+    return
+  } catch (error) {
+    res.status(httpStatus.BAD_REQUEST).json({erro: true, message: error})
+    return
+  }
+}
+
+const findById = async (req, res) =>{
+  let id = req.params.id
+  try {
+    let users = await userModel.findById(id)
+    res.status(httpStatus.OK).json({users: users})
+    return
+  } catch (error) {
+    res.status(httpStatus.NOT_FOUND).json({erro: true, message: error})
+    return
+  }
+
 }
 
 const createUser = async (req, res) => {
@@ -36,6 +57,7 @@ const createUser = async (req, res) => {
 }
 
 module.exports = {
-  getUsers,
-  createUser
+  findAll,
+  createUser,
+  findById
 }
